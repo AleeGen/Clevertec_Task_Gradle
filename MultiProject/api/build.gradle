@@ -1,6 +1,8 @@
 plugins {
-    id 'java'
+    id 'application'
 }
+
+version = '1.0'
 
 repositories {
     mavenLocal()
@@ -9,6 +11,16 @@ repositories {
 
 dependencies {
     implementation project(':core')
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': "ru.clevertec.App"
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 test {
